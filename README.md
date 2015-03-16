@@ -143,6 +143,9 @@ use(JUJarCategory) {
 }
 ```
 
+Api docs can be found [here](http://jdp.rvkb.com/api/rjar/index.html).
+
+
 (c) [pojosontheweb.com](http://pojosontheweb.com)
 
 
