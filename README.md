@@ -128,9 +128,10 @@ Usage :
 ```
 import com.rvkb.util.jar.*
 
+JarFile jar = new JarFile(new File(pathToJar))
+
 use(JUJarCategory) {
 
-	JarFile jar = new JarFile(new File(pathToJar))
 
 	jar.eachEntry { JUJarEntry entry ->
 		...
