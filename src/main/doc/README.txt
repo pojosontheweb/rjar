@@ -2,10 +2,8 @@ rjar - Recursive Jar Manipulation Tool
 --------------------------------------
 
 Utility that allows to manipulate Java Archive (jar) files recursively.
-Full doc, bug reports, contrib, etc. at :
 
-    http://rjar.googlecode.com
-
+https://github.com/pojosontheweb/rjar
 
 Installation
 ------------
@@ -16,7 +14,7 @@ Set the environment variable RJAR_HOME to the extracted rjar folder, e.g. :
   bash$ export RJAR_HOME=/Users/johndoe/tools/rjar
 
 
-On unix, set execution permissions on the rjar script :
+On unix, set execution permissions on the rjar script if needed :
 
   bash$ chmod +x $RJAR_HOME/bin/rjar
 
@@ -32,4 +30,4 @@ You're ready to go ! To try your install, cd in any folder and type rjar :
   bash$ rjar
 
 
-... you should see the usage message, which means everything should be ok !
+... you should see the usage message, which means everything is ok !

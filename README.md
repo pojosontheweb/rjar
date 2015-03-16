@@ -6,17 +6,27 @@
 
 Supported features :
 
-* list jar entries recursively : all entries are displayed including entries of nested jars if any
-* expand a jar recursively : expand the jar and its nested jars to the specified directory
-* recreate a jar from an expanded rjar* : allows to rebuild a jar with nested jars from an expanded directory structure
-* graphical front-end* : tree view of your jars, with regexp filtering
+* _list jar entries recursively_ : all entries are displayed including entries of nested jars if any
+* _expand a jar recursively_ : expand the jar and its nested jars to the specified directory
+* _recreate a jar from an expanded rjar_ : allows to rebuild a jar with nested jars from an expanded directory structure
+* _graphical front-end_ : tree view of your jars, with regexp filtering
+
+## Install
+
+Download binary distribution :
+
+* [.zip](https://repo1.maven.org/maven2/com/pojosontheweb/rjar/0.6/rjar-0.6-bin.zip) 
+* [.tar.gz](https://repo1.maven.org/maven2/com/pojosontheweb/rjar/0.6/rjar-0.6-bin.tar.gz) 
+
+Unpack wherever you want, and follow instructions in `<unpack_dir>/README.txt`.
+
 
 ## Examples
 
 List the contents of an ear :
 
 ```
-mybox:~ vankeisb$ rjar t ./projects/jarutils/src/test/resources/test.ear 
+$ rjar t ./projects/jarutils/src/test/resources/test.ear 
 test.ear/META-INF/
 test.ear/META-INF/MANIFEST.MF
 test.ear/META-INF/application.xml
@@ -43,8 +53,8 @@ test.ear/mywebapp.war/WEB-INF/lib/jstl-1.1.0.jar/javax/servlet/jsp/jstl/core/Con
 Extract the whole ear recursively :
 
 ```
-mybox:~ vankeisb$ rjar x ./projects/jarutils/src/test/resources/test.ear /tmp
-mybox:~ vankeisb$ find /tmp/test.ear 
+$ rjar x ./projects/jarutils/src/test/resources/test.ear /tmp
+$ find /tmp/test.ear 
 /tmp/test.ear
 /tmp/test.ear/META-INF
 /tmp/test.ear/META-INF/application.xml
@@ -66,17 +76,18 @@ mybox:~ vankeisb$ find /tmp/test.ear
 ```
 
 Rebuild a previously expanded (r)jar :
+
 ```
-mybox:~ vankeisb$ rjar r /tmp/test.ear /tmp/recreated
-mybox:~ vankeisb$ ls /tmp/recreated
+$ rjar r /tmp/test.ear /tmp/recreated
+$ ls /tmp/recreated
 test.ear
 ```
 
 As any other command line utility, rjar can be combined with other unix commands. Here's how you can find a particular class in a set of jar files :
 
 ```
-mybox:~ vankeisb$ cd $ECLIPSE_HOME
-mybox:eclipse-3.3.2 vankeisb$ find . -name *.jar -exec rjar t {} \; | grep plugin.properties
+$ cd $ECLIPSE_HOME
+$ find . -name *.jar -exec rjar t {} \; | grep plugin.properties
 com.ibm.icu_3.6.1.v20070906.jar/plugin.properties
 com.jcraft.jsch_0.1.31.jar/plugin.properties
 javax.servlet.jsp_2.0.0.v200706191603.jar/plugin.properties
@@ -88,7 +99,7 @@ javax.wsdl_1.4.0.v200706111329.jar/plugin.properties
 You can also use the GUI front end to open the jar(s) in a tree view :
 
 ```
-mybox:~ vankeisb$ rjar ui ./test.ear ./commons-logging.jar
+$ rjar ui ./test.ear ./commons-logging.jar
 ```
 
 ![screenshot 1](rjar-screenshot1.png)
@@ -99,7 +110,40 @@ Entries list can be filtered using regexp :
 
 ## From Groovy
 
-`rjar` is implemented as a set of Groovy classes. It basically augments the `JarFile` class from the JDK, via a Category class, adding methods to crawl the jar file recursively. 
+`rjar` is implemented as a set of Groovy classes. It basically augments the `JarFile` class from the JDK, via a Category class, adding methods to crawl the jar file recursively.
+
+Maven dependency :
+
+```
+<dependency>
+  <groupId>com.pojosontheweb</groupId>
+  <artifactId>rjar</artifactId>
+  <version>...</version>
+</dependency>
+```
+ 
+Usage : 
+
+
+```
+import com.rvkb.util.jar.*
+
+use(JUJarCategory) {
+
+	JarFile jar = new JarFile(new File(pathToJar))
+
+	jar.eachEntry { JUJarEntry entry ->
+		...
+	}
+
+	jar.eachEntryRecursive { JUJarEntry entry ->
+		...
+	}
+}
+```
+
+(c) [pojosontheweb.com](http://pojosontheweb.com)
+
 
 
 
