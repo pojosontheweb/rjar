@@ -86,15 +86,16 @@ javax.wsdl_1.4.0.v200706111329.jar/plugin.properties
 ```
 
 You can also use the GUI front end to open the jar(s) in a tree view :
+
 ```
-mybox:~ vankeisb$ rjar ui ./projects/jarutils/src/test/resources/test.ear ./commons-logging.jar
+mybox:~ vankeisb$ rjar ui ./test.ear ./commons-logging.jar
 ```
 
-[http://rjar.googlecode.com/files/rjar-screenshot1.png]
+![screenshot 1](rjar-screenshot1.png)
 
-And even filter using regular expressions :
+Entries list can be filtered using regexp :
 
-[http://rjar.googlecode.com/files/rjar-screenshot2.png]
+![screenshot 2](http://rjar.googlecode.com/files/rjar-screenshot2.png)
 
 ## From Groovy
 
