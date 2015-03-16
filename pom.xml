@@ -1,17 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.rvkb</groupId>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>6</version>
+    </parent>
+    <groupId>com.pojosontheweb</groupId>
     <artifactId>rjar</artifactId>
     <name>rjar</name>
     <packaging>jar</packaging>
-    <version>0.5</version>
+    <version>0.6</version>
+    <properties>
+        <groovyVersion>2.4.1</groovyVersion>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <version>1.6.7</version>
-        </dependency>        
+            <version>${groovyVersion}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -20,14 +28,18 @@
         </dependency>
     </dependencies>
     <build>
-    	<defaultGoal>install</defaultGoal>
         <plugins>
             <!--
                 Use Groovy plugin for compilation of .groovy files
             -->
             <plugin>
-                <groupId>org.codehaus.groovy.maven</groupId>
+                <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <providerSelection>2.0</providerSelection>
+                    <sourceEncoding>UTF-8</sourceEncoding>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -38,12 +50,20 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                        <version>${groovyVersion}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <!-- system props used in tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
                 <configuration>
                     <systemProperties>
                         <property>
@@ -62,59 +82,84 @@
                 </configuration>
             </plugin>
 
-			<plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
+            <!--
+                Assembly plugin allows to generate the distributable archive
+            -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
                 <executions>
                     <execution>
+                        <phase>package</phase>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <executable>java</executable>
-                    <arguments>
-                        <argument>-classpath</argument>
-                        <!-- automatically creates the classpath using all project dependencies,
-                  also adding the project build directory -->
-                        <classpath/>
-                        <argument>com.rvkb.util.jar.ui.JarUtilGUI</argument>
-                    </arguments>
-                </configuration>
             </plugin>
+
 
         </plugins>
     </build>
 
     <profiles>
         <profile>
-            <id>distrib</id>
+            <id>release</id>
             <build>
                 <plugins>
-
-                    <!--
-                        Assembly plugin allows to generate the distributable archive
-                    -->
                     <plugin>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>assembly.xml</descriptor>
-                            </descriptors>
-                        </configuration>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.7</version>
                         <executions>
                             <execution>
-                                <phase>install</phase>
+                                <id>generate-javadoc</id>
+                                <phase>package</phase>
                                 <goals>
-                                    <goal>assembly</goal>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <author>true</author>
+                                    <use>true</use>
+                                    <version>true</version>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.1.2</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>                    
-
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
+
     </profiles>
 </project>
