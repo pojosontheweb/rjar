@@ -15,8 +15,8 @@ Supported features :
 
 Download binary distribution :
 
-* [.zip](https://repo1.maven.org/maven2/com/pojosontheweb/rjar/0.6/rjar-0.6-bin.zip) 
-* [.tar.gz](https://repo1.maven.org/maven2/com/pojosontheweb/rjar/0.6/rjar-0.6-bin.tar.gz) 
+* [.zip](https://repo1.maven.org/maven2/com/pojosontheweb/rjar/0.6.1/rjar-0.6.1-bin.zip) 
+* [.tar.gz](https://repo1.maven.org/maven2/com/pojosontheweb/rjar/0.6.1/rjar-0.6.1-bin.tar.gz) 
 
 Unpack wherever you want, and follow instructions in `<unpack_dir>/README.txt`.
 
