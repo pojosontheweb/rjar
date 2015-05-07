@@ -10,7 +10,7 @@
     <artifactId>rjar</artifactId>
     <name>rjar</name>
     <packaging>jar</packaging>
-    <version>0.6</version>
+    <version>0.6.1</version>
     <properties>
         <groovyVersion>2.4.1</groovyVersion>
     </properties>

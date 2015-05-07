@@ -291,10 +291,10 @@ class JarUtil {
 
     private static void usage() {
         println '''
-*************************************************
-* rjar : recursive jar manipulation tool (v0.5) *
-* http://rjar.googlecode.com                    *
-*************************************************
+***************************************************
+* rjar : recursive jar manipulation tool (v0.6.1) *
+* http://rjar.googlecode.com                      *
+***************************************************
 
 Usage :
     rjar t jar_file : list the contents of a jar and nested jars if any
