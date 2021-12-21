@@ -8,5 +8,12 @@ if [ -z "$RJAR_HOME" ] ; then
 	# must be set !
 	echo "the RJAR_HOME environment variable must be set"
 else
-	java -cp $RJAR_HOME/lib/groovy-all-2.4.1.jar:$RJAR_HOME/lib/rjar-0.6.1.jar com.rvkb.util.jar.JarUtil "$@"
+    java \
+        --add-opens=java.base/java.io=ALL-UNNAMED \
+        --add-opens=java.base/java.lang=ALL-UNNAMED \
+        --add-opens=java.base/java.lang.reflect=ALL-UNNAMED \
+        --add-opens=java.base/java.util=ALL-UNNAMED \
+        --add-opens=java.base/java.util.jar=ALL-UNNAMED \
+        --add-opens=java.base/java.util.zip=ALL-UNNAMED \
+        -cp $RJAR_HOME/lib/groovy-all-1.6.7.jar:$RJAR_HOME/lib/rjar-0.5.jar com.rvkb.util.jar.JarUtil "$@"
 fi
